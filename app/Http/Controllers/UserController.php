@@ -16,7 +16,7 @@ class UserController extends Controller
     {
         return view('user.show', compact('user'));
     }
-    //处理提价数据
+    //处理提交数据
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -29,6 +29,7 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
+        Auth::login($user);
         session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
         return redirect()->route('users.show', [$user]);
     }
